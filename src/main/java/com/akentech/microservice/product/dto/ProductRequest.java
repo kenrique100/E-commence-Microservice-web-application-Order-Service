@@ -2,5 +2,8 @@ package com.akentech.microservice.product.dto;
 
 import java.math.BigDecimal;
 
-public record ProductRequest(String id, String name, String description, BigDecimal price ) {
+/**
+ * Represents a request to create or update a product.
+ */
+public record ProductRequest(String id, String name, String description, BigDecimal price) {
 }
