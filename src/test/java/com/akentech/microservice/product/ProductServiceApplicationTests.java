@@ -1,4 +1,3 @@
-/*
 package com.akentech.microservice.product;
 
 import com.akentech.microservice.product.dto.ProductRequest;
@@ -72,5 +71,39 @@ class ProductServiceApplicationTests {
 					Assertions.assertEquals(product.getPrice(), response.price());
 				});
 	}
+
+	@Test
+	void shouldDeleteProduct() {
+		// Step 1: Create and save a product to the database
+		Product product = Product.builder()
+				.id("delete-test-id")
+				.name("SUV Toyota Honda")
+				.description("Black SUV with 4WD")
+				.price(BigDecimal.valueOf(10000000))
+				.build();
+		productRepository.save(product).block();
+
+		// Step 2: Delete the product using the DELETE endpoint
+		webTestClient.delete()
+				.uri("/api/product/{id}", product.getId())
+				.exchange()
+				.expectStatus().isNoContent();
+
+		// Step 3: Verify that the product no longer exists in the database
+		webTestClient.get()
+				.uri("/api/product/{id}", product.getId())
+				.exchange()
+				.expectStatus().isNotFound();
+	}
+
+	@Test
+	void shouldReturnNoContentWhenDeletingNonExistentProduct() {
+		// Try to delete a product that does not exist
+		String nonExistentId = "non-existent-id";
+
+		webTestClient.delete()
+				.uri("/api/product/{id}", nonExistentId)
+				.exchange()
+				.expectStatus().isNoContent();
+	}
 }
-*/

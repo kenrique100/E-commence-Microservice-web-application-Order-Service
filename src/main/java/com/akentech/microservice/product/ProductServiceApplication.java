@@ -4,6 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
+/**
+ * Main application class for the Product Service.
+ */
 @SpringBootApplication
 @EnableReactiveMongoRepositories(basePackages = "com.akentech.microservice.product.repository")
 public class ProductServiceApplication {
