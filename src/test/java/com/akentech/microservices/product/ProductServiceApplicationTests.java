@@ -1,9 +1,9 @@
-package com.akentech.microservice.product;
+package com.akentech.microservices.product;
 
-import com.akentech.microservice.product.dto.ProductRequest;
-import com.akentech.microservice.product.dto.ProductResponse;
-import com.akentech.microservice.product.model.Product;
-import com.akentech.microservice.product.repository.ProductRepository;
+import com.akentech.microservices.product.dto.ProductRequest;
+import com.akentech.microservices.product.dto.ProductResponse;
+import com.akentech.microservices.product.model.Product;
+import com.akentech.microservices.product.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

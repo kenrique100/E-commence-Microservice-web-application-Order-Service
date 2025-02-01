@@ -1,8 +1,8 @@
-package com.akentech.microservice.product.controller;
+package com.akentech.microservices.product.controller;
 
-import com.akentech.microservice.product.dto.ProductRequest;
-import com.akentech.microservice.product.dto.ProductResponse;
-import com.akentech.microservice.product.service.ProductService;
+import com.akentech.microservices.product.dto.ProductRequest;
+import com.akentech.microservices.product.dto.ProductResponse;
+import com.akentech.microservices.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

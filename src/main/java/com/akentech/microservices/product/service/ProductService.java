@@ -1,7 +1,7 @@
-package com.akentech.microservice.product.service;
+package com.akentech.microservices.product.service;
 
-import com.akentech.microservice.product.dto.ProductRequest;
-import com.akentech.microservice.product.dto.ProductResponse;
+import com.akentech.microservices.product.dto.ProductRequest;
+import com.akentech.microservices.product.dto.ProductResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

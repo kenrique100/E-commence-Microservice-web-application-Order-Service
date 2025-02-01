@@ -1,4 +1,4 @@
-package com.akentech.microservice.product.exception;
+package com.akentech.microservices.product.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

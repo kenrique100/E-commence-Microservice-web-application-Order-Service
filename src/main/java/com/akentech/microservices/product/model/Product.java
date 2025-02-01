@@ -1,4 +1,4 @@
-package com.akentech.microservice.product.model;
+package com.akentech.microservices.product.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

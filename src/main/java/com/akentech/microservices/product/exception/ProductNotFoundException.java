@@ -1,4 +1,4 @@
-package com.akentech.microservice.product.exception;
+package com.akentech.microservices.product.exception;
 
 public class ProductNotFoundException extends RuntimeException {
     public ProductNotFoundException(String message) {

@@ -1,4 +1,4 @@
-package com.akentech.microservice.product;
+package com.akentech.microservices.product;
 
 import org.springframework.boot.SpringApplication;
 
