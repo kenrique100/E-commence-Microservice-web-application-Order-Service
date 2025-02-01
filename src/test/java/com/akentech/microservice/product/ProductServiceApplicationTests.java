@@ -73,6 +73,16 @@ class ProductServiceApplicationTests {
 	}
 
 	@Test
+	void shouldReturnNotFoundWhenProductDoesNotExist() {
+		String nonExistentId = "non-existent-id";
+
+		webTestClient.get()
+				.uri("/api/product/{id}", nonExistentId)
+				.exchange()
+				.expectStatus().isNotFound();
+	}
+
+	@Test
 	void shouldDeleteProduct() {
 		// Step 1: Create and save a product to the database
 		Product product = Product.builder()
@@ -97,13 +107,12 @@ class ProductServiceApplicationTests {
 	}
 
 	@Test
-	void shouldReturnNoContentWhenDeletingNonExistentProduct() {
-		// Try to delete a product that does not exist
+	void shouldReturnNotFoundWhenDeletingNonExistentProduct() {
 		String nonExistentId = "non-existent-id";
 
 		webTestClient.delete()
 				.uri("/api/product/{id}", nonExistentId)
 				.exchange()
-				.expectStatus().isNoContent();
+				.expectStatus().isNotFound();
 	}
 }
