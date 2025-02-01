@@ -1,7 +1,9 @@
 package com.akentech.microservice.product.repository;
 
-import com.akentech.microservice.productservice.model.Product;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.akentech.microservice.product.model.Product;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProductRepository  extends MongoRepository<product, String> {
+@Repository
+public interface ProductRepository extends ReactiveMongoRepository<Product, String> {
 }
