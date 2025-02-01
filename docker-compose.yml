@@ -1,72 +1,13 @@
+version: '4'
 services:
-  mariadb:
-    image: mariadb:10.6
-    container_name: order-service-mariadb
-    restart: always
+  mongodb:
+    image: mongo:7.0.5
+    container_name: mongodb
+    ports:
+      - "27017:27017"
     environment:
-      MYSQL_ROOT_PASSWORD: Bundes9898
-      MYSQL_DATABASE: order_service
-      MYSQL_USER: root
-      MYSQL_PASSWORD: Bundes9898
-    ports:
-      - "3307:3306"
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Bundes9898
+      MONGO_INITDB_DATABASE: product-service
     volumes:
-      - mariadb_data:/var/lib/mysql
-      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - my-network
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    restart: always
-    depends_on:
-      - mariadb
-    environment:
-      PMA_HOST: order-service-mariadb
-      PMA_PORT: 3306
-      PMA_USER: root
-      PMA_PASSWORD: Bundes9898
-      UPLOAD_LIMIT: 64M
-    ports:
-      - "8082:80"
-    networks:
-      - my-network
-
-  portainer:
-    image: portainer/portainer-ce
-    container_name: portainer
-    restart: always
-    ports:
-      - "8000:8000"
-      - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
-    networks:
-      - my-network
-
-  flyway:
-    image: flyway/flyway
-    container_name: flyway
-    restart: always
-    depends_on:
-      - mariadb
-    command: [
-      "-url=jdbc:mariadb://order-service-mariadb:3306/order_service?useSSL=false",
-      "-user=root",
-      "-password=Bundes9898",
-      "migrate"
-    ]
-    volumes:
-      - ./resources/db/migration:/flyway/sql
-    networks:
-      - my-network
-
-volumes:
-  portainer_data:
-  mariadb_data:
-
-networks:
-  my-network:
-    driver: bridge
+      - ./data:/data/db
