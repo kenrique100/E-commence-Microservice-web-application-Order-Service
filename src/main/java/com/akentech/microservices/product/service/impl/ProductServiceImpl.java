@@ -1,10 +1,11 @@
-package com.akentech.microservices.product.service;
+package com.akentech.microservices.product.service.impl;
 
 import com.akentech.microservices.product.dto.ProductRequest;
 import com.akentech.microservices.product.dto.ProductResponse;
 import com.akentech.microservices.product.exception.ProductNotFoundException;
 import com.akentech.microservices.product.model.Product;
 import com.akentech.microservices.product.repository.ProductRepository;
+import com.akentech.microservices.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
