@@ -5,6 +5,7 @@ import com.akentech.microservices.order.client.InventoryClient;
 import com.akentech.microservices.order.dto.OrderRequest;
 import com.akentech.microservices.order.dto.OrderResponse;
 import com.akentech.microservices.order.exception.OrderNotFoundException;
+import com.akentech.microservices.order.exception.OutOfStockException;
 import com.akentech.microservices.order.model.Order;
 import com.akentech.microservices.order.repository.OrderRepository;
 import com.akentech.microservices.order.util.OrderServiceUtil;
@@ -33,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
         var inventoryResponse = inventoryClient.checkInventory(inventoryRequest);
 
         if (!inventoryResponse.isInStock()) {
-            throw new RuntimeException("Product with SKU code " + orderRequest.skuCode() + " is out of stock.");
+            throw new OutOfStockException("Product with SKU code " + orderRequest.skuCode() + " is out of stock.");
         }
 
         // Create and save the order using the utility method
@@ -60,7 +61,11 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrder(Long id, OrderRequest orderRequest) {
         Order order = OrderServiceUtil.findOrderByIdOrThrow(orderRepository, id);
 
-        order.setOrderNumber(orderRequest.orderNumber());
+        // Do not update the orderNumber if it is null in the request
+        if (orderRequest.orderNumber() != null) {
+            order.setOrderNumber(orderRequest.orderNumber());
+        }
+
         order.setSkuCode(orderRequest.skuCode());
         order.setPrice(orderRequest.price());
         order.setQuantity(orderRequest.quantity());

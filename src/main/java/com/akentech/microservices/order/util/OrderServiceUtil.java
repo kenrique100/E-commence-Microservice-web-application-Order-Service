@@ -26,7 +26,7 @@ public class OrderServiceUtil {
         validateOrderRequest(orderRequest); // Ensure valid data before processing
 
         Order order = new Order();
-        order.setOrderNumber(UUID.randomUUID().toString());
+        order.setOrderNumber(orderRequest.orderNumber() != null ? orderRequest.orderNumber() : UUID.randomUUID().toString());
         order.setPrice(orderRequest.price());
         order.setSkuCode(orderRequest.skuCode());
         order.setQuantity(orderRequest.quantity());

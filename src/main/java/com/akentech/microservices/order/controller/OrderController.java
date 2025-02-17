@@ -2,6 +2,7 @@ package com.akentech.microservices.order.controller;
 
 import com.akentech.microservices.order.dto.OrderRequest;
 import com.akentech.microservices.order.dto.OrderResponse;
+import com.akentech.microservices.order.exception.OutOfStockException;
 import com.akentech.microservices.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class OrderController {
         try {
             orderService.placeOrder(orderRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body("Order Placed Successfully");
-        } catch (RuntimeException e) {
+        } catch (OutOfStockException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
