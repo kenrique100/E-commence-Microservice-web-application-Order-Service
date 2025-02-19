@@ -1,14 +1,15 @@
 package com.akentech.microservices.order.controller;
 
 import com.akentech.microservices.order.dto.OrderRequest;
-import com.akentech.microservices.order.model.Order;
+import com.akentech.microservices.order.dto.OrderResponse;
+import com.akentech.microservices.order.exception.OutOfStockException;
 import com.akentech.microservices.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/order")
@@ -19,20 +20,24 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String placeOrder(@RequestBody OrderRequest orderRequest) {
-        orderService.placeOrder(orderRequest);
-        return "Order Placed Successfully";
+    public ResponseEntity<String> placeOrder(@RequestBody OrderRequest orderRequest) {
+        try {
+            orderService.placeOrder(orderRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Order Placed Successfully");
+        } catch (OutOfStockException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Order> getAllOrders() {
+    public List<OrderResponse> getAllOrders() {
         return orderService.getAllOrders();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Order> getOrderById(@PathVariable Long id) {
+    public OrderResponse getOrderById(@PathVariable Long id) {
         return orderService.getOrderById(id);
     }
 

@@ -2,7 +2,7 @@ package com.akentech.microservices.order.dto;
 
 import java.math.BigDecimal;
 
-public record OrderRequest(
+public record OrderResponse(
         Long id,
         String orderNumber,
         String skuCode,

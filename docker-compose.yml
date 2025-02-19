@@ -1,7 +1,7 @@
 services:
   mariadb:
     image: mariadb:10.6
-    container_name: mariadb
+    container_name: order-service-mariadb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Bundes9898
@@ -13,6 +13,8 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
       - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - my-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -21,13 +23,15 @@ services:
     depends_on:
       - mariadb
     environment:
-      PMA_HOST: mariadb
+      PMA_HOST: order-service-mariadb
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: Bundes9898
       UPLOAD_LIMIT: 64M
     ports:
       - "8082:80"
+    networks:
+      - my-network
 
   portainer:
     image: portainer/portainer-ce
@@ -39,21 +43,30 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    networks:
+      - my-network
 
   flyway:
     image: flyway/flyway
     container_name: flyway
+    restart: always
     depends_on:
       - mariadb
     command: [
-      "-url=jdbc:mariadb://mariadb:3306/order_service",
+      "-url=jdbc:mariadb://order-service-mariadb:3306/order_service?useSSL=false",
       "-user=root",
       "-password=Bundes9898",
       "migrate"
     ]
     volumes:
-      - ./db/migration:/flyway/sql
+      - ./resources/db/migration:/flyway/sql
+    networks:
+      - my-network
 
 volumes:
   portainer_data:
   mariadb_data:
+
+networks:
+  my-network:
+    driver: bridge
